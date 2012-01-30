@@ -12,7 +12,12 @@ class ParseText
     words = Array.new
     number_of_elements = pairs.length  
     number_of_elements.times do
-     words << ["roof"]  
+      |pair|
+      if pair == 9
+        words << ["roof"]
+      else
+       words << ["up"] 
+      end 
     end
     words
   end
