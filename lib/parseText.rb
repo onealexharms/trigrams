@@ -9,38 +9,25 @@ class ParseText
   end
 
   def phrase_completing_words
-    words = Array.new
-    number_of_elements = pairs.length  
-    number_of_elements.times do
-      |pair|
-      if pair == 9
-        words << ["roof"]
-      else
-       words << ["up"] 
-      end 
-    end
-    words
+    size_of_array = pairs.length
+    build_words = Array.new(size_of_array, [""])
+    for index in (2..(source_words.length-1))
+      word = source_words[index]
+      phrase = [source_words[index-2],source_words[index-1]]
+      index_in_pairs = pairs.find_index(phrase)
+      build_words[index_in_pairs] = build_words[index_in_pairs] << [word]
+    end 
+    build_words
   end
 
   def pairs
-    pairs = Array.new
+    build_pairs = Array.new
     source_words.each_with_index do
       |first_word, index|
       second_word = source_words[index + 1]||""
-      pairs << [first_word, second_word] 
+      build_pairs << [first_word, second_word] 
     end
-    pairs.uniq
-  end
-
-  def triads
-    triads = Array.new
-    source_words.each_with_index do
-      |first_word, index|
-      second_word = source_words[index + 1]||""
-      third_word = source_words[index + 2]||""
-      triads << [first_word, second_word, third_word]
-    end
-    triads
+    build_pairs.uniq
   end
 
 end

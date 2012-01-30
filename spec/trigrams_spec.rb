@@ -13,10 +13,6 @@ describe "something" do
     @parsed_text.pairs[1].should == ["hot","evening"]
   end
 
-  it "gets triads of words from the book text" do
-    @parsed_text.triads[1].should == ["hot", "evening", "in"]
-  end
- 
   it "identifies the unique pairs of keys" do
     @parsed_text.pairs.should == @parsed_text.pairs.uniq
   end
@@ -27,14 +23,14 @@ describe "something" do
   end
   
   it "tells us that 'roof' follows 'onto the'" do
-    sample_word = "roof" 
+    sample_word = ["roof"] 
     expected_phrase = ["onto", "the"]
     index_in_pairs = @parsed_text.pairs.find_index(expected_phrase) 
     @parsed_text.phrase_completing_words[index_in_pairs].should include sample_word 
   end
  
   it "tells us that 'up' follows 'carried him' and 'to get'" do
-    sample_word = "up"
+    sample_word = ["up"]
     first_expected_phrase = ["carried", "him"]
     second_expected_phrase = ["to", "get"]
     index_of_first_pair = @parsed_text.pairs.find_index(first_expected_phrase)
@@ -42,10 +38,12 @@ describe "something" do
     @parsed_text.phrase_completing_words[index_of_first_pair].should include sample_word
     @parsed_text.phrase_completing_words[index_of_first_pair].should include sample_word
   end
-  
-  it "can find a word that follows a phrase" 
-  it "discounts capital letters when looking for third words"
-  it "discounts punctuation when looking for third words"
-  it "can find all words that follow a phrase"
+ 
+  it "matches 'could' 'sorted' and 'did' to the phrase 'and he'" do
+    sample_words = [["could"], ["did"], ["sorted"]]
+    phrase_to_check = ["and", "he"]
+    index_in_pairs = @parsed_text.pairs.find_index(phrase_to_check)
+    @parsed_text.phrase_completing_words[index_in_pairs].sort.should == sample_words
+  end
 
 end
